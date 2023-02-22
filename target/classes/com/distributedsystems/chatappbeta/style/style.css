@@ -1,0 +1,43 @@
+.background_dark{
+    -fx-background-color: #263238;
+
+}
+.scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-display-caret: false;
+    -fx-content-display: top;
+}
+.text_label{
+    -fx-text-fill: #fff;
+}
+.logo_text{
+    -fx-text-fill: #1e88e5;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 5 0;
+    -fx-border-color: #1e88e5;
+}
+.slogan_text{
+    -fx-text-fill: #fff;
+    -fx-font-size: 18px;
+}
+.text_field{
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-border-color: #1e88e5;
+    -fx-text-fill: #fff;
+}
+.btn{
+    -fx-text-fill: #fff;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #1e88e5;
+    -fx-border-color: #1e88e5;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+}
+.btn:hover{
+    -fx-background-color: transparent;
+    -fx-border-color: #1e88e5;
+    -fx-border-width: 2;
+}

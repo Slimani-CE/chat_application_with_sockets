@@ -1,0 +1,27 @@
+Pane AnchorPane{
+    -fx-padding: 5px;
+}
+.text_flow{
+    -fx-background-color: rgba(30, 136, 229, 0.3);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #1e88e5;
+    -fx-border-width: 2;
+    -fx-padding: 7;
+    -fx-spacing: 7;
+    -fx-alignment: center;
+    -fx-text-fill: #fff;
+    /*shadow effect*/
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.text_flow:hover{
+    -fx-background-color: #1e88e5;
+    -fx-border-color: #1e88e5;
+    -fx-border-width: 2;
+}
+/*If user is current user*/
+/*.text_flow{*/
+/*    -fx-background-color: rgba(55, 220, 109, 0.3);*/
+/*    -fx-border-color: #1ba13d;*/
+/*}*/
