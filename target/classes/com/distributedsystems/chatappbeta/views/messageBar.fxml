@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="520.0" stylesheets="@../style/messageBar.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefWidth="520.0" stylesheets="@../style/messageBar.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutY="7.0" prefWidth="250.0">
+      <AnchorPane prefHeight="42.0" prefWidth="256.0">
          <children>
-            <TextFlow fx:id="messageTextFlow" layoutX="15.0" maxWidth="240.0" minWidth="240.0" styleClass="text_flow">
+            <VBox alignment="CENTER_LEFT" fillWidth="false" layoutX="10.0" layoutY="4.0">
                <children>
-                  <Text fx:id="messageText" fill="#2a1553" fontSmoothingType="LCD" strokeWidth="0.0" text="Hello World" wrappingWidth="231.27655029296875">
-                     <font>
-                        <Font name="Calibri Light" size="14.0" />
-                     </font>
-                  </Text>
+                  <Label fx:id="senderLabel" prefHeight="18.0" prefWidth="217.0" styleClass="messageLabel" text="From: name#id">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextFlow fx:id="messageTextFlow" maxWidth="240.0" minWidth="240.0" styleClass="text_flow">
+                     <children>
+                        <Text fx:id="messageText" fill="#e4e4e4" fontSmoothingType="LCD" strokeWidth="0.0" styleClass="msgText" text="Hello World" wrappingWidth="231.27655029296875">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                     </padding>
+                  </TextFlow>
+                  <Label fx:id="dateLabel" alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="242.0" styleClass="messageLabel" text="11/05/2000">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </Label>
                </children>
-               <padding>
-                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-               </padding>
-            </TextFlow>
+            </VBox>
          </children>
          <opaqueInsets>
             <Insets />

@@ -29,10 +29,12 @@ import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ChatController extends Thread implements Initializable {
@@ -81,12 +83,13 @@ public class ChatController extends Thread implements Initializable {
 
     private long counter = 0;
     // TODO: 17/02/2023 Restrict the character @ in the username
+    // TODO: 26/02/2023 Handle the checkbox list problem with the cur user checkbox
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Connect to the server
         try {
             // Create a socket
-            socket = new Socket("localhost", 1234);
+            socket = new Socket("localhost", 5050);
             // Add it to the SingletonData
             singletonData.setSocket(socket);
             // Initialize the writer and the reader
@@ -106,12 +109,12 @@ public class ChatController extends Thread implements Initializable {
         System.out.println("Username: " + singletonData.getUsername());
         // Set username in the label
         curUserName.setText(singletonData.getUsername());
-
         // Get user identifier
         getUserIdentifier();
-
         // Get list of users
         getListOfOnlineUsers();
+        // Get number of online users
+        this.getOnlineUsersNbr();
 
         // Start the thread that will listen to the server
         Thread thread = new Thread(() -> {
@@ -123,7 +126,7 @@ public class ChatController extends Thread implements Initializable {
                     System.out.println("Message received: " + message);
                     this.checkMessage(message);
                     // Get the number of online users
-                    this.getOnlineUsersNbr();
+//                    this.getOnlineUsersNbr();
 //                    this.getListOfOnlineUsers();
                     // TODO: 16/02/2023 Handle the received messages error.
                 } catch (IOException e) {
@@ -212,7 +215,7 @@ public class ChatController extends Thread implements Initializable {
         else if (!isErrorMessage){
             messageText = message.substring(message.indexOf(":") + 1);
             senderName = message.substring(1, message.indexOf("@"));
-            senderIdentifier = message.substring(message.indexOf("@") + 1, message.indexOf(":"));
+            senderIdentifier = message.substring(message.indexOf("@") + 1, message.indexOf("]"));
         }
         else if (isErrorMessage){
             messageText = message.substring("[ERROR]:".length());
@@ -232,18 +235,35 @@ public class ChatController extends Thread implements Initializable {
         Text text = (Text) messagePane.lookup("#messageText");
         // Get the TextFlow
         TextFlow textFlow = (TextFlow) messagePane.lookup("#messageTextFlow");
+        // Get the sender label
+        Label senderLabel = (Label) messagePane.lookup("#senderLabel");
+        // Get the date label
+        Label dateLabel = (Label) messagePane.lookup("#dateLabel");
         // Set the text
         text.setText(messageText);
         // If user is the current user change TextFlow style and align it to the right
         if (isCurrentUser && !isErrorMessage){
-            textFlow.setStyle("-fx-background-color: rgba(55, 220, 109, 0.3); -fx-border-color: #1ba13d;");
+            textFlow.getStyleClass().add("text_flow_cur_user");
+            messagePane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            textFlow.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+            // remove the sender label
+            senderLabel.setVisible(false);
+            // Set date and time of message
+            dateLabel.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+        }
+        else if (isErrorMessage){
+            textFlow.getStyleClass().add("text_flow_error");
+            // remove the sender label
+            senderLabel.setVisible(false);
+            dateLabel.setVisible(false);
             messagePane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             textFlow.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         }
-        else if (isErrorMessage){
-            textFlow.setStyle("-fx-background-color: rgba(255, 0, 0, 0.3); -fx-border-color: #ff0000;");
-            messagePane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            textFlow.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        else {
+            // Set the sender name
+            senderLabel.setText("From: " + senderName + "#" + senderIdentifier);
+            // Set date and time of message
+            dateLabel.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
         }
         // Add the Pane to the list of messages
         listMessages.getChildren().add(messagePane);
@@ -256,7 +276,7 @@ public class ChatController extends Thread implements Initializable {
         vbar.setValue(vbar.getMax());
         // Set the value of the vertical scroll bar to its maximum value after the layout of the ScrollPane has been performed
         scrollPane.layout();
-        scrollPane.setVvalue(1);
+        scrollPane.setVvalue(2);
     }
 
     // Update the list of checked users
@@ -331,6 +351,7 @@ public class ChatController extends Thread implements Initializable {
 
     // Check the message received from the server
     private void checkMessage(String message){
+        System.out.println("Message: " + message);
         // If the message is not empty
         if (message != null && !message.isEmpty()){
             // If the message is a notification
@@ -405,8 +426,12 @@ public class ChatController extends Thread implements Initializable {
                     ((CheckBox) anchorPane.lookup("#userCheckBox")).setOnAction(this::selectUser);
                     // If the user is the current user then change his profile picture
                     if(identifier.equals("" + userIdentifier)){
+                        // Change the profile picture
                         Image image = new Image(ApplicationJAVAFX.class.getResourceAsStream("media/profileCurrentUser.png"));
                         ((ImageView)anchorPane.lookup("#pfp")).setImage(image);
+                        // Remove checkbox
+                        anchorPane.lookup("#userCheckBox").setVisible(false);
+                        anchorPane.lookup("#userCheckBox").setDisable(true);
                     }
                     AnchorPane finalAnchorPane = anchorPane;
                     Platform.runLater(() -> {

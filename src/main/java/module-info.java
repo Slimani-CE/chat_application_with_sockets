@@ -7,4 +7,6 @@ module com.distributedsystems.chatappbeta {
     exports com.distributedsystems.chatappbeta;
     exports com.distributedsystems.chatappbeta.controllers;
     opens com.distributedsystems.chatappbeta.controllers to javafx.fxml;
+    exports SingleThreadNonBlockingServer;
+    opens SingleThreadNonBlockingServer to javafx.fxml;
 }
