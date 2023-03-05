@@ -89,7 +89,7 @@ public class ChatController extends Thread implements Initializable {
         // Connect to the server
         try {
             // Create a socket
-            socket = new Socket("localhost", 5050);
+            socket = new Socket("localhost", 1337);
             // Add it to the SingletonData
             singletonData.setSocket(socket);
             // Initialize the writer and the reader
@@ -125,23 +125,14 @@ public class ChatController extends Thread implements Initializable {
                     String message = this.reader.readLine();
                     System.out.println("Message received: " + message);
                     this.checkMessage(message);
-                    // Get the number of online users
-//                    this.getOnlineUsersNbr();
-//                    this.getListOfOnlineUsers();
-                    // TODO: 16/02/2023 Handle the received messages error.
                 } catch (IOException e) {
                     System.out.println("Error while reading from the server");
                     // Close the socket
                     try {
                         socket.close();
-                        // TODO: 16/02/2023 Handle the error while closing the socket
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
-                }
-                try {
-                    Thread.currentThread().sleep(10);
-                } catch (InterruptedException e) {
                 }
             }
         });
@@ -151,28 +142,19 @@ public class ChatController extends Thread implements Initializable {
                 Socket socket = SingletonData.getInstance().getSocket();
                 System.out.println("Application is shutting down...");
                 // Send request to the server to logout
-                System.out.println("DEBUG: Sending logout request to the server");
                 writer.println(REQUEST_USER_LOGOUT);
                 try {
-                    System.out.println("DEBUG: Closing the socket");
                     socket.close();
-                    System.out.println("DEBUG: Joining the thread");
                     if(thread.isAlive()){
-                        System.out.println("DEBUG: Interrupting the thread");
                         thread.interrupt();
-                        System.out.println("DEBUG: Joining the thread");
                         try {
                             thread.join();
-                            System.out.println("DEBUG: Thread joined");
                             Thread.currentThread().interrupt();
-                            System.out.println("DEBUG: Thread interrupted");
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     }
-                    System.out.println("DEBUG: Thread joined");
                     System.exit(0);
-                    System.out.println("DEBUG: System exited");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -419,7 +401,7 @@ public class ChatController extends Thread implements Initializable {
                     try {
                         anchorPane = FXMLLoader.load(ApplicationJAVAFX.class.getResource("views/profileBar.fxml"));
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        System.out.println("Error: " + e.getMessage());
                     }
                     ((Label) anchorPane.lookup("#userName")).setText(name);
                     ((Label) anchorPane.lookup("#userId")).setText(identifier);
@@ -452,7 +434,7 @@ public class ChatController extends Thread implements Initializable {
                 try {
                     anchorPane = FXMLLoader.load(ApplicationJAVAFX.class.getResource("views/profileBar.fxml"));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Error: " + e.getMessage());
                 }
                 AnchorPane finalAnchorPane = anchorPane;
                 Platform.runLater(() -> {

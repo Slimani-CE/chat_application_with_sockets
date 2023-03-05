@@ -40,10 +40,8 @@ public class STNBServer {
             selector = Selector.open();
             serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.configureBlocking(false);
-            serverSocketChannel.bind(new InetSocketAddress("0.0.0.0", 4444));
-//            int validOps = serverSocketChannel.validOps();
+            serverSocketChannel.bind(new InetSocketAddress("0.0.0.0", 4242));
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.println("# Server is running on address: " + serverSocketChannel.getLocalAddress() + " port: " + serverSocketChannel.socket().getLocalPort() + "");
         } catch (IOException e) {
             System.out.println("Could not start server");
         }
@@ -98,8 +96,15 @@ public class STNBServer {
         User user = new User();
         user.setSocketChannel(socketChannel);
         user.setId(idCounter++);
+        onlineUsersNbr++;
         users.add(user);
         System.out.println(String.format("# New connection from %s", socketChannel.getRemoteAddress()));
+        // Responde to the client
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.put(String.format("You are connected!").getBytes());
+        byteBuffer.flip();
+        socketChannel.write(byteBuffer);
+
     }
 
     // Handle read/write
@@ -109,14 +114,13 @@ public class STNBServer {
         int dataSize = socketChannel.read(byteBuffer);
 
         if(dataSize == -1){
-            System.out.println(String.format("# Connection closed from %s", socketChannel.getRemoteAddress()));
+            onlineUsersNbr--;
             socketChannel.close();
         }
         else{
             // Get user
             User user = getUserBySocketChannel(socketChannel);
             String request = new String(byteBuffer.array()).trim();
-            System.out.println(String.format("# Received request from %s: %s", socketChannel.getRemoteAddress(), request));
 
             // Trait request
             String response = traitRequest(request, user);
@@ -288,6 +292,7 @@ public class STNBServer {
         for(User user : users){
             if(user.getSocketChannel() == socketChannel){
                 users.remove(user);
+                onlineUsersNbr--;
                 break;
             }
         }

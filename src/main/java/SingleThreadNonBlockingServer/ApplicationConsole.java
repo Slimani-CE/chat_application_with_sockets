@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Scanner;
@@ -19,7 +18,7 @@ public class ApplicationConsole {
 
         // Connect to the server
         String serverAddress = "127.0.0.1";
-        int serverPort = 4444;
+        int serverPort = 4242;
         // Create a socket channel and connect to the server
         try {
             SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(serverAddress, serverPort));

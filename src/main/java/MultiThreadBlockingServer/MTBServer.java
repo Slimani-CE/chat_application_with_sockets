@@ -26,8 +26,7 @@ public class MTBServer extends Thread{
     public void run() {
         try {
             // Create ServerSocket
-            ServerSocket serverSocket = new ServerSocket(5050);
-            System.out.println("# Server is running on address: " + serverSocket.getInetAddress() + " port: " + serverSocket.getLocalPort() + "");
+            ServerSocket serverSocket = new ServerSocket(1337);
             // Receive connections from users
             while(true){
                 // Accept the connection
