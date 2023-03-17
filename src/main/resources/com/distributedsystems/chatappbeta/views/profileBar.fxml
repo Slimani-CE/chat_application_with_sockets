@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="250.0" styleClass="profile_bar" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+         <children>
+            <CheckBox fx:id="userCheckBox" mnemonicParsing="false">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </CheckBox>
+            <AnchorPane prefHeight="69.0" prefWidth="184.0">
+               <children>
+                  <ImageView fx:id="pfp" fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="5.0">
+                     <image>
+                        <Image url="@../media/profile.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="userName" layoutX="52.0" layoutY="10.0" text="User name" textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userId" layoutX="106.0" layoutY="35.0" text="-" textFill="#616060">
+                     <font>
+                        <Font name="Calibri" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="52.0" layoutY="34.0" text="User Id: " textFill="#616060">
+                     <font>
+                        <Font name="Calibri" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

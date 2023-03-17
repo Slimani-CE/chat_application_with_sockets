@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.distributedsystems.chatappbeta.controllers.ChatController">
+   <left>
+      <AnchorPane prefHeight="450.0" prefWidth="260.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="-2.0" prefHeight="450.0" prefWidth="263.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="260.0" styleClass="search_hbox">
+                     <children>
+                        <TextField fx:id="searchField" prefHeight="30.0" prefWidth="160.0" promptText="Search" styleClass="searchBar">
+                           <opaqueInsets>
+                              <Insets left="10.0" right="10.0" />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Select all " textFill="#1e88e5">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <CheckBox fx:id="selectAll" mnemonicParsing="false" onAction="#selectAllUsers" prefHeight="18.0" prefWidth="13.0">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <ScrollPane prefHeight="414.0" prefWidth="263.0" styleClass="left_pane">
+                     <content>
+                        <VBox fx:id="onlineUsersVbox" layoutY="36.0" prefHeight="413.0" prefWidth="260.0">
+                           <rotationAxis>
+                              <Point3D />
+                           </rotationAxis>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="bodyAnchorPane" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="450.0" fitWidth="539.0" layoutY="-1.0" pickOnBounds="true" smooth="false" styleClass="background_image">
+               <image>
+                  <Image url="@../media/background7.jpg" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="-0.65" contrast="1.0" />
+               </effect>
+            </ImageView>
+            <AnchorPane prefHeight="36.0" prefWidth="540.0" styleClass="messageHead">
+               <children>
+                  <Label layoutX="422.0" layoutY="9.0" text="Onlines: " textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="255.0" layoutY="8.0" text="Your Id: " textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="onlineUsersNbr" layoutX="474.0" layoutY="9.0" prefHeight="18.0" prefWidth="42.0" text="-" textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userId" layoutX="306.0" layoutY="9.0" text="-" textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="43.0" layoutY="9.0" text="Name: " textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="curUserName" layoutX="88.0" layoutY="10.0" text="-" textFill="#1e88e5">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <VBox layoutY="36.0" prefHeight="412.0" prefWidth="540.0" styleClass="mainVBox">
+               <children>
+                  <ScrollPane fx:id="scrollPane" prefHeight="372.0" prefWidth="540.0" styleClass="mainMessageView">
+                     <content>
+                        <VBox fx:id="listMessages" alignment="CENTER" fillWidth="false" prefWidth="540.0">
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  <HBox alignment="CENTER" prefHeight="49.0" prefWidth="540.0" styleClass="hbox_input">
+                     <children>
+                        <TextField fx:id="messageField" prefHeight="35.0" prefWidth="274.0" promptText="Message" styleClass="inputMessage" />
+                        <Button mnemonicParsing="false" onAction="#sendMessage" prefHeight="35.0" prefWidth="80.0" styleClass="sendBtn" text="Send">
+                           <opaqueInsets>
+                              <Insets right="10.0" />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </center>
+   <stylesheets>
+      <URL value="@../style/style.css" />
+      <URL value="@../style/profileBar.css" />
+   </stylesheets>
+</BorderPane>
