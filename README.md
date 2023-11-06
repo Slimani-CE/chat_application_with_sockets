@@ -25,7 +25,7 @@ Welcome to the JavaFX Chat App, a simple and beautiful chat application built wi
 4. Message Display: Messages are neatly displayed with sender names, dates, and text. 📅📝
 
 ## Demo
-Check it out here: [demo](https://www.youtube.com/watch?v=Mq-peqxoyKU&t=954s](https://www.youtube.com/watch?v=EYT9HyEoeK8&t=12s)
+Check it out here: [demo](https://www.youtube.com/watch?v=EYT9HyEoeK8&t=12s)
 
 ## Contributing
 
